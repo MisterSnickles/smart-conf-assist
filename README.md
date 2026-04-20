@@ -14,5 +14,5 @@ Installation Instructions
 #### If you are on Mac/Linux:
 `source venv/bin/activate`
 
-###Then using the venv cli:
+### Then using the venv cli:
 `pip install fastapi uvicorn python-multipart chromadb`
