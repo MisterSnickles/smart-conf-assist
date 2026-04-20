@@ -3,7 +3,16 @@ Smart Conference Assistant - Peer Review Article AI Search
 
 
 
-Installation Instructions
+## Installation Instructions
+
+Make sure that you have Python installed:
+
+### Windows
+`winget install Python.Python.3.12`
+
+### Linux
+`sudo apt update`
+`sudo apt install python3 python3-venv`
 
 ### 1. Create the virtual environment
 `python -m venv venv`
