@@ -1,0 +1,38 @@
+[
+  {
+    "paper_id": "acl-2025-001",
+    "title": "Natural Language Search for Scientific Discovery",
+    "authors": ["Ava Carter", "Noah Patel"],
+    "abstract": "We study how natural language retrieval can improve scientific paper discovery when users express ideas vaguely instead of using exact keywords. Our method combines semantic retrieval and grounded answer generation.",
+    "conference_name": "ACL",
+    "conference_year": 2025,
+    "track": "Main Conference"
+  },
+  {
+    "paper_id": "neurips-2024-009",
+    "title": "Conference-Scale Abstract Retrieval with Local Language Models",
+    "authors": ["Mia Johnson", "Liam Brooks"],
+    "abstract": "This paper presents a multi-conference retrieval system that indexes thousands of abstracts, ranks relevant papers, and uses a local language model to generate concise grounded responses without fabricating metadata.",
+    "conference_name": "NeurIPS",
+    "conference_year": 2024,
+    "track": "Datasets and Benchmarks"
+  },
+  {
+    "paper_id": "chi-2025-014",
+    "title": "Designing Simple Interfaces for Academic Search Assistants",
+    "authors": ["Ella Martinez"],
+    "abstract": "We evaluate lightweight user interfaces for academic assistants and show that clear search controls, upload feedback, and ranked results improve trust and usability.",
+    "conference_name": "CHI",
+    "conference_year": 2025,
+    "track": "User Experience"
+  },
+  {
+    "paper_id": "acl-2024-077",
+    "title": "Semantic Matching for Vague Research Queries",
+    "authors": ["Sophia Kim", "Ethan Nguyen"],
+    "abstract": "Semantic embeddings allow vague or descriptive user queries to retrieve relevant research papers even when no exact keyword overlap exists. We compare embedding-based retrieval to lexical baselines.",
+    "conference_name": "ACL",
+    "conference_year": 2024,
+    "track": "Findings"
+  }
+]

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Conference Assistant</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; max-width: 600px; }
+        .upload-section { border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
+        #statusMessage { margin-top: 15px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>Smart Conference Assistant</h1>
+    
+    <div class="upload-section">
+        <h2>Ingest Abstracts</h2>
+        <input type="file" id="jsonFileInput" accept=".json">
+        <button onclick="uploadFile()">Upload Data</button>
+        <p id="statusMessage"></p>
+    </div>
+
+    <script>
+        async function uploadFile() {
+            const fileInput = document.getElementById('jsonFileInput');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            if (fileInput.files.length === 0) {
+                statusMessage.textContent = "Please select a file first.";
+                statusMessage.style.color = "red";
+                return;
+            }
+
+            const file = fileInput.files;
+            const formData = new FormData();
+            formData.append("file", file);
+
+            statusMessage.textContent = "Uploading...";
+            statusMessage.style.color = "black";
+
+            try {
+                // Send the file to the FastAPI backend
+                const response = await fetch('http://localhost:8000/api/ingest', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    statusMessage.textContent = `Success: Ingested ${result.valid_records_ingested} records.`;
+                    statusMessage.style.color = "green";
+                } else {
+                    
+                    // This will force JavaScript to print the actual error text!
+                     statusMessage.textContent = `Error: ${JSON.stringify(result.detail)}`;
+                     statusMessage.style.color = "red";
+                }
+            } catch (error) {
+                statusMessage.textContent = "Connection error. Is the backend running?";
+                statusMessage.style.color = "red";
+                console.error("Error:", error);
+            }
+        }
+    </script>
+</body>
+</html>
