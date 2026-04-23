@@ -4,8 +4,7 @@ Smart Conference Assistant - Peer Review Article AI Search
 
 
 ## Installation Instructions
-
-Make sure that you have Python installed:
+#### Make sure that you have Python installed:
 
 ### Windows
 `winget install Python.Python.3.12`
@@ -13,6 +12,9 @@ Make sure that you have Python installed:
 ### Linux
 `sudo apt update`
 `sudo apt install python3 python3-venv`
+
+
+
 
 ### 1. Create the virtual environment
 #### (Venv or Virtual Environment is a Python feature that allows the creation of isolated directory trees that contain a specific Python interpreter and independent sets of installed packages. So we can install using various libraries using pip, which is in step 3)
@@ -33,5 +35,9 @@ Make sure that you have Python installed:
 
 
 ### 4. Launch the Program
-#### (Using uvicorn, we can launch the main.py file which intializes the ChromaDB and connection to the locally hosted webpage)
+#### (Using uvicorn, we can launch the main.py file which intializes the ChromaDB and connection to the locally hosted webpage through port 8000)
 `python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000`
+
+
+### 5. Navigate to locally hosted .html file in File Explorer
+#### ()
