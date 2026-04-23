@@ -4,64 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Conference Assistant</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; max-width: 600px; }
-        .upload-section { border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
-        #statusMessage { margin-top: 15px; font-weight: bold; }
-    </style>
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
 
     <h1>Smart Conference Assistant</h1>
     
-    <div class="upload-section">
-        <h2>Ingest Abstracts</h2>
-        <input type="file" id="jsonFileInput" accept=".json">
-        <button onclick="uploadFile()">Upload Data</button>
-        <p id="statusMessage"></p>
+    <div class="suggested-articles">
+        <h2>Suggested Articles</h2>
+        <div id="suggestedArticles">
+            <!-- Suggested article links will be populated here -->
+            <a href="#" class="article-link">Sample Article 1</a>
+            <a href="#" class="article-link">Sample Article 2</a>
+        </div>
+    </div>
+
+    <div class="search-section">
+        <h2>AI Search</h2>
+        <input type="text" id="queryInput" placeholder="Ask a question about the conference abstracts...">
+        <select id="yearSelect">
+            <option value="">All Years</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+        </select>
+        <button id="searchButton" onclick="performSearch()">Search</button>
+    </div>
+
+    <div class="response-section">
+        <h2>AI Response</h2>
+        <div id="responseBox">
+            <!-- AI responses will be displayed here -->
+        </div>
     </div>
 
     <script>
-        async function uploadFile() {
-            const fileInput = document.getElementById('jsonFileInput');
-            const statusMessage = document.getElementById('statusMessage');
+        async function performSearch() {
+            const queryInput = document.getElementById('queryInput');
+            const yearSelect = document.getElementById('yearSelect');
+            const responseBox = document.getElementById('responseBox');
+            const searchButton = document.getElementById('searchButton');
             
-            if (fileInput.files.length === 0) {
-                statusMessage.textContent = "Please select a file first.";
-                statusMessage.style.color = "red";
+            const query = queryInput.value.trim();
+            const year = yearSelect.value;
+            
+            if (!query) {
+                responseBox.textContent = "Please enter a question.";
                 return;
             }
 
-            const file = fileInput.files;
-            const formData = new FormData();
-            formData.append("file", file);
-
-            statusMessage.textContent = "Uploading...";
-            statusMessage.style.color = "black";
+            searchButton.disabled = true;
+            responseBox.textContent = "Searching...";
 
             try {
-                // Send the file to the FastAPI backend
-                const response = await fetch('http://localhost:8000/api/ingest', {
+                const response = await fetch('http://localhost:8000/api/search', {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: query, year: year })
                 });
 
                 const result = await response.json();
 
                 if (response.ok) {
-                    statusMessage.textContent = `Success: Ingested ${result.valid_records_ingested} records.`;
-                    statusMessage.style.color = "green";
+                    responseBox.textContent = result.response || "No response received.";
+                    if (result.suggestedArticles) {
+                        updateSuggestedArticles(result.suggestedArticles);
+                    }
                 } else {
-                    
-                    // This will force JavaScript to print the actual error text!
-                     statusMessage.textContent = `Error: ${JSON.stringify(result.detail)}`;
-                     statusMessage.style.color = "red";
+                    responseBox.textContent = `Error: ${result.detail || 'Unknown error'}`;
                 }
             } catch (error) {
-                statusMessage.textContent = "Connection error. Is the backend running?";
-                statusMessage.style.color = "red";
+                responseBox.textContent = "Connection error. Is the backend running?";
                 console.error("Error:", error);
+            } finally {
+                searchButton.disabled = false;
             }
+        }
+
+        function updateSuggestedArticles(articles) {
+            const suggestedDiv = document.getElementById('suggestedArticles');
+            suggestedDiv.innerHTML = '';
+            articles.forEach(article => {
+                const link = document.createElement('a');
+                link.href = '#'; // Or actual link if available
+                link.className = 'article-link';
+                link.textContent = article.title || 'Untitled Article';
+                suggestedDiv.appendChild(link);
+            });
         }
     </script>
 </body>
