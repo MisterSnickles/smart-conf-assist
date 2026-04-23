@@ -1,0 +1,9 @@
+body { font-family: Arial, sans-serif; margin: 40px; max-width: 800px; }
+.suggested-articles { border: 1px solid #ccc; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+.search-section { border: 1px solid #ccc; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+.response-section { border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
+#queryInput { width: 60%; padding: 8px; }
+#yearSelect { padding: 8px; margin-left: 10px; }
+#searchButton { padding: 8px 16px; margin-left: 10px; }
+#responseBox { min-height: 200px; white-space: pre-wrap; }
+.article-link { display: block; margin: 5px 0; color: blue; text-decoration: underline; }
