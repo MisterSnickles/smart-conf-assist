@@ -140,12 +140,27 @@ async def search_and_respond(search_query: SearchQuery):
             })
         
         # Generate response using Ollama in a background thread so the FastAPI event loop is not blocked.
-        prompt = f"""Based on the following research papers, answer this query: "{search_query.query}"
+        prompt = f"""
+                    You are a smart conference assistant.
+                    Use only the information in the provided papers and metadata.
+                    Do not use any outside knowledge.
+                    Do not make any assumptions.
+                    Do not invent facts.
 
-Papers:
-{papers_text}
+                    Question: "{search_query.query}"
 
-Provide a concise, informative response that synthesizes the relevant papers."""
+                    Papers:
+                    {papers_text}
+
+                    If the answer is not clearly present in the provided papers, respond exactly:
+                    "I cannot provide a sufficient answer based on the provided papers."
+
+                    If the question is unrelated to these papers, respond exactly:
+                    "The provided papers do not contain information to answer this question."
+
+                    Provide a concise answer only when the paper abstracts explicitly support it.
+                    If the papers do not contain the answer, do not attempt to answer from memory or general knowledge.
+                    """
         
         response = await asyncio.to_thread(
             lambda: ollama.generate(
