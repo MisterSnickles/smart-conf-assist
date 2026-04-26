@@ -149,7 +149,7 @@ Provide a concise, informative response that synthesizes the relevant papers."""
         
         response = await asyncio.to_thread(
             lambda: ollama.generate(
-                model="mistral",  # Change to "llama2" if you pulled that instead
+                model="llama3.2:1b",  # Change to "llama2" if you pulled that instead
                 prompt=prompt,
                 stream=False
             )
