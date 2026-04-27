@@ -4,59 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Conference Assistant</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="./main.css?v=20">
 </head>
 <body>
-
-    <h1>Smart Conference Assistant</h1>
-    
-    <div class="suggested-articles">
-        <h2>Suggested Articles</h2>
-        <div id="suggestedArticles">
-            <!-- Suggested article links will be populated here -->
-            <a href="#" class="article-link">Sample Article 1</a>
-            <a href="#" class="article-link">Sample Article 2</a>
+    <div class="page">
+        <div class="hero">
+            <h1>Smart Conference Assistant 🤖</h1>
+            <p>Search conference paper abstracts using an AI-powered assistant.</p>
         </div>
-    </div>
 
-    <div class="search-section">
-        <h2>AI Search</h2>
-        <input type="text" id="queryInput" placeholder="Ask a question about the conference abstracts...">
-        <select id="yearSelect">
-            <option value="">All Years</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-        </select>
-        <button id="searchButton" onclick="performSearch()">Search</button>
-    </div>
+        <div class="details">
+            <div class="detail-box">
+                <strong>AI</strong>
+                <span>Semantic Search</span>
+            </div>
+            <div class="detail-box">
+                <strong>RAG</strong>
+                <span>Grounded Answers</span>
+            </div>
+            <div class="detail-box">
+                <strong>Local</strong>
+                <span>FastAPI Backend</span>
+            </div>
+        </div>
 
-    <div class="response-section">
-        <h2>AI Response</h2>
-        <div id="responseBox">
-            <!-- AI responses will be displayed here -->
+        <div class="card">
+            <h2>AI Search</h2>
+            <p>Ask a question about conference papers, topics, methods, or research areas.</p>
+
+            <div class="search-row">
+                <input type="text" id="queryInput" placeholder="Example: Which papers discuss deep learning for healthcare?">
+
+                <select id="yearSelect">
+                    <option value="">All Years</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                </select>
+
+                <button id="searchButton" onclick="performSearch()">Search</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>AI Response</h2>
+            <div id="responseBox">Your AI response will appear here after you search.</div>
+        </div>
+
+        <div class="card">
+            <h2>Suggested Articles</h2>
+            <div id="suggestedArticles">
+                <a href="#" class="article-link">Sample Article 1</a>
+                <a href="#" class="article-link">Sample Article 2</a>
+            </div>
         </div>
     </div>
 
     <script>
+        document.getElementById("queryInput").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                performSearch();
+            }
+        });
+
         async function performSearch() {
             const queryInput = document.getElementById('queryInput');
             const yearSelect = document.getElementById('yearSelect');
             const responseBox = document.getElementById('responseBox');
             const searchButton = document.getElementById('searchButton');
-            
+
             const query = queryInput.value.trim();
             const year = yearSelect.value;
-            
+
             if (!query) {
-                responseBox.textContent = "Please enter a question.";
+                responseBox.innerHTML = '<span class="error-message">Please enter a question before searching.</span>';
                 return;
             }
 
             searchButton.disabled = true;
-            responseBox.textContent = "Searching...";
+            searchButton.textContent = "Searching...";
+
+            responseBox.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <span>Searching abstracts and generating an AI response...</span>
+                </div>
+            `;
 
             try {
                 const response = await fetch('http://localhost:8000/api/search', {
@@ -70,27 +105,35 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    responseBox.textContent = result.response || "No response received.";
+                    responseBox.innerHTML = `<div class="fade-in">${result.response || "No response received."}</div>`;
+
                     if (result.suggestedArticles) {
                         updateSuggestedArticles(result.suggestedArticles);
                     }
                 } else {
-                    responseBox.textContent = `Error: ${result.detail || 'Unknown error'}`;
+                    responseBox.innerHTML = `<span class="error-message">Error:</span> ${result.detail || 'Unknown error'}`;
                 }
             } catch (error) {
-                responseBox.textContent = "Connection error. Is the backend running?";
+                responseBox.innerHTML = '<span class="error-message">Connection error.</span> Make sure your FastAPI backend is running on http://localhost:8000';
                 console.error("Error:", error);
             } finally {
                 searchButton.disabled = false;
+                searchButton.textContent = "Search";
             }
         }
 
         function updateSuggestedArticles(articles) {
             const suggestedDiv = document.getElementById('suggestedArticles');
             suggestedDiv.innerHTML = '';
+
+            if (!articles || articles.length === 0) {
+                suggestedDiv.innerHTML = '<p>No suggested articles found.</p>';
+                return;
+            }
+
             articles.forEach(article => {
                 const link = document.createElement('a');
-                link.href = '#'; // Or actual link if available
+                link.href = '#';
                 link.className = 'article-link';
                 link.textContent = article.title || 'Untitled Article';
                 suggestedDiv.appendChild(link);
