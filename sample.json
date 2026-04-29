@@ -1,38 +1,47 @@
 [
   {
-    "paper_id": "acl-2025-001",
-    "title": "Natural Language Search for Scientific Discovery",
-    "authors": ["Ava Carter", "Noah Patel"],
-    "abstract": "We study how natural language retrieval can improve scientific paper discovery when users express ideas vaguely instead of using exact keywords. Our method combines semantic retrieval and grounded answer generation.",
+    "paper_id": "acl-2021-001",
+    "title": "Vocabulary Learning via Optimal Transport for Neural Machine Translation",
+    "authors": ["Jingjing Xu", "Hao Zhou", "Chunjian Pan", "Chengyue Jiang"],
+    "abstract": "The choice of token vocabulary affects the performance of machine translation. This paper aims to figure out what is a good vocabulary and whether we can find the optimal vocabulary without trial training by providing an alternative understanding of vocabulary from the perspective of information theory.",
     "conference_name": "ACL",
-    "conference_year": 2025,
+    "conference_year": 2021,
     "track": "Main Conference"
   },
   {
-    "paper_id": "neurips-2024-009",
-    "title": "Conference-Scale Abstract Retrieval with Local Language Models",
-    "authors": ["Mia Johnson", "Liam Brooks"],
-    "abstract": "This paper presents a multi-conference retrieval system that indexes thousands of abstracts, ranks relevant papers, and uses a local language model to generate concise grounded responses without fabricating metadata.",
+    "paper_id": "icml-2022-042",
+    "title": "Grounded Language-Image Pre-training",
+    "authors": ["Liunian Harold Li", "Pengchuan Zhang", "Haotian Zhang", "Jianwei Yang"],
+    "abstract": "This paper presents a grounded language-image pre-training (GLIP) model for learning object-level, language-aware, and semantic-rich visual representations. GLIP unifies object detection and phrase grounding for pre-training, achieving state-of-the-art results on various vision-language tasks.",
+    "conference_name": "ICML",
+    "conference_year": 2022,
+    "track": "Main Conference"
+  },
+  {
+    "paper_id": "neurips-2023-112",
+    "title": "Are Emergent Abilities of Large Language Models a Mirage?",
+    "authors": ["Rylan Schaeffer", "Brando Miranda", "Sanmi Koyejo"],
+    "abstract": "Recent work claims that large language models display emergent abilities, transitioning seemingly instantaneously from not present to present at unforeseeable model scales. We present evidence suggesting that these emergent abilities are heavily dependent on the chosen metrics and may largely be a mirage.",
     "conference_name": "NeurIPS",
-    "conference_year": 2024,
-    "track": "Datasets and Benchmarks"
+    "conference_year": 2023,
+    "track": "Main Track"
   },
   {
-    "paper_id": "chi-2025-014",
-    "title": "Designing Simple Interfaces for Academic Search Assistants",
-    "authors": ["Ella Martinez"],
-    "abstract": "We evaluate lightweight user interfaces for academic assistants and show that clear search controls, upload feedback, and ranked results improve trust and usability.",
+    "paper_id": "chi-2024-055",
+    "title": "A Multi-Stable Curved Line Shape Display",
+    "authors": ["Wing-Sum Law", "Sofia Di Toro Wyetzner", "Raymond Zhen", "Sean Follmer"],
+    "abstract": "In this work, we propose a multi-stable curved line shape display capable of rendering various organic and non-uniform shapes. This expands the expressive capabilities of shape-changing interfaces beyond traditional grid-based pin arrays.",
     "conference_name": "CHI",
-    "conference_year": 2025,
-    "track": "User Experience"
+    "conference_year": 2024,
+    "track": "Extended Abstracts"
   },
   {
-    "paper_id": "acl-2024-077",
-    "title": "Semantic Matching for Vague Research Queries",
-    "authors": ["Sophia Kim", "Ethan Nguyen"],
-    "abstract": "Semantic embeddings allow vague or descriptive user queries to retrieve relevant research papers even when no exact keyword overlap exists. We compare embedding-based retrieval to lexical baselines.",
-    "conference_name": "ACL",
-    "conference_year": 2024,
-    "track": "Findings"
+    "paper_id": "iclr-2025-089",
+    "title": "CycleResearcher: Improving Automated Research via Automated Review",
+    "authors": ["Alan Turing","Ada Lovelace"],
+    "abstract": "This paper explores the feasibility of using open-source post-trained LLMs as autonomous agents capable of performing the full cycle of automated research and review, from literature review and manuscript preparation to peer review and paper refinement.",
+    "conference_name": "ICLR",
+    "conference_year": 2025,
+    "track": "Main Conference"
   }
 ]
