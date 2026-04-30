@@ -7,6 +7,8 @@ from pathlib import Path
 import ollama
 from pydantic import BaseModel
 
+from io import BytesIO
+
 app = FastAPI(title="Smart Conference Assistant API")
 
 # Allow the local HTML file to talk to this local server
@@ -78,8 +80,7 @@ async def ingest_abstracts(file: UploadFile = File(...)):
                 # Use the paper_id if it exists, otherwise generate one
                 doc_id = record.get("paper_id", f"{file.filename}_record_{i}")
                 
-                # ChromaDB metadata needs to be flat (strings, ints, floats).
-                # So, we convert the ["Ava Carter", "Noah Patel"] list into "Ava Carter, Noah Patel"
+                
                 authors_str = ", ".join(record["authors"])
                 
                 # Add to ChromaDB
@@ -108,6 +109,7 @@ async def ingest_abstracts(file: UploadFile = File(...)):
 class SearchQuery(BaseModel):
     query: str
     num_results: int = 5
+    year: str = ""  # Optional year filter
 
 @app.post("/api/search")
 async def search_and_respond(search_query: SearchQuery):
@@ -122,11 +124,34 @@ async def search_and_respond(search_query: SearchQuery):
         if not results or not results['documents'] or len(results['documents'][0]) == 0:
             return {"response": "No relevant papers found.", "papers": []}
         
+        # Filter by year if provided
+        filtered_docs = []
+        filtered_metadatas = []
+        
+        for doc, metadata in zip(results['documents'][0], results['metadatas'][0]):
+            # Extract year from conference string (format: "Conference 2024")
+            conference_str = metadata.get('conference', '')
+            conference_year = conference_str.split()[-1] if conference_str else ''
+            
+            # If year filter is provided, only include papers from that year
+            if search_query.year:
+                if conference_year == search_query.year:
+                    filtered_docs.append(doc)
+                    filtered_metadatas.append(metadata)
+            else:
+                # If no year filter, include all results
+                filtered_docs.append(doc)
+                filtered_metadatas.append(metadata)
+        
+        # Check if any papers match the year filter
+        if not filtered_docs:
+            return {"response": f"No papers found from {search_query.year}.", "papers": []}
+        
         # Format the retrieved papers for the LLM
         papers_text = ""
         papers_list = []
         
-        for i, (doc, metadata) in enumerate(zip(results['documents'][0], results['metadatas'][0])):
+        for i, (doc, metadata) in enumerate(zip(filtered_docs, filtered_metadatas)):
             papers_text += f"\nPaper {i+1}: {metadata['title']}\n"
             papers_text += f"Authors: {metadata['authors']}\n"
             papers_text += f"Conference: {metadata['conference']}\n"
@@ -141,30 +166,31 @@ async def search_and_respond(search_query: SearchQuery):
         
         # Generate response using Ollama in a background thread so the FastAPI event loop is not blocked.
         prompt = f"""
-                    You are a smart conference assistant.
-                    Use only the information in the provided papers and metadata.
-                    Do not use any outside knowledge.
-                    Do not make any assumptions.
-                    Do not invent facts.
+            You are a precise document retrieval assistant. Grab papers only from year that is specified in the query.
+            Your task is to identify the SINGLE best matching paper from the provided list based on the user's query.
 
-                    Question: "{search_query.query}"
+            User Query: "{search_query.query}"
+            
 
-                    Papers:
-                    {papers_text}
+            Papers Data:
+            {papers_text}
 
-                    If the answer is not clearly present in the provided papers, respond exactly:
-                    "I cannot provide a sufficient answer based on the provided papers."
-
-                    If the question is unrelated to these papers, respond exactly:
-                    "The provided papers do not contain information to answer this question."
-
-                    Provide a concise answer only when the paper abstracts explicitly support it.
-                    If the papers do not contain the answer, do not attempt to answer from memory or general knowledge.
-                    """
+            Instructions:
+            1. Analyze all provided papers and select only the one that most closely relates to the query.
+            2. If a match is found, your response must follow this exact format:
+            Best Matching Paper
+               Title: [Insert Title Here]
+               Authors: [Insert Authors Here]
+               Conference: [Insert Conference Name and Here]
+               Abstract: [Insert Abstract Here, Along with brief explaination on why the paper matches (2 to 3 sentences)]
+            3. Do not include any introductory text, pleasantries, or explanations.
+            4. If no paper is a relevant match, respond exactly: "I cannot provide a sufficient answer based on the provided papers."
+            5. Use only the provided text. Do not invent details or use outside knowledge.
+            """
         
         response = await asyncio.to_thread(
             lambda: ollama.generate(
-                model="llama3.2:1b",  # Change to "llama2" if you pulled that instead
+                model="mistral",  # Change to "llama2" if you pulled that instead
                 prompt=prompt,
                 stream=False
             )
