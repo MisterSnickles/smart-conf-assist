@@ -26,6 +26,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/api/models")
+async def get_available_models():
+    """Fetch the list of models currently downloaded in Ollama."""
+    try:
+        models_dict = ollama.list()
+        # Extract just the 'model' string (e.g., 'mistral:latest', 'llama3')
+        model_names = [m.get('model', m.get('name')) for m in models_dict.get('models', [])]
+        return {"models": model_names}
+    except Exception as e:
+        return {"models": ["mistral"], "error": str(e)}
+
 # Serve the frontend HTML file
 @app.get("/")
 async def serve_frontend():
@@ -120,7 +131,8 @@ async def ingest_abstracts(file: UploadFile = File(...)):
 class SearchQuery(BaseModel):
     query: str
     num_results: int = 5
-    year: str = ""  # Optional year filter
+    year: str = ""
+    model: str = "mistral"  # Default model
 
 @app.post("/api/search")
 async def search_and_respond(search_query: SearchQuery):
@@ -202,7 +214,7 @@ async def search_and_respond(search_query: SearchQuery):
         # Generate response
         response = await asyncio.to_thread(
             lambda: ollama.generate(
-                model="mistral", 
+                model=search_query.model, 
                 prompt=prompt,
                 stream=False
             )

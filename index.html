@@ -30,6 +30,9 @@
                 <option value="2024">2024</option>
                 <option value="2025">2025</option>
             </select>
+            <select id="modelSelect">
+                <option value="mistral">Mistral</option>
+            </select>
 
             <button id="searchButton" onclick="performSearch()">Search</button>
         </div>
@@ -43,6 +46,28 @@
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const response = await fetch('/api/models');
+        const data = await response.json();
+        
+        if (data.models && data.models.length > 0) {
+            const modelSelect = document.getElementById('modelSelect');
+            modelSelect.innerHTML = ''; // Clear default
+            
+            data.models.forEach(modelName => {
+                const option = document.createElement('option');
+                option.value = modelName;
+                // Capitalize the first letter for the UI
+                option.textContent = modelName.charAt(0).toUpperCase() + modelName.slice(1);
+                modelSelect.appendChild(option);
+            });
+        }
+    } catch (e) {
+        console.error("Could not fetch models:", e);
+    }
+});
+
 document.getElementById("queryInput").addEventListener("keypress", function(e) {
     if (e.key === "Enter") {
         performSearch();
@@ -57,6 +82,7 @@ async function performSearch() {
 
     const query = queryInput.value.trim();
     const year = yearSelect.value;
+    const selectedModel = document.getElementById('modelSelect').value;
 
     if (!query) {
         responseBox.innerHTML = '<span class="error">Please enter a question.</span>';
@@ -79,7 +105,7 @@ async function performSearch() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ query: query, year: year })
+            body: JSON.stringify({ query: query, year: year, model: selectedModel })
         });
 
         const result = await response.json();
