@@ -5,26 +5,26 @@ The Smart Conference Assistant is a Retrieval-Augmented Generation (RAG) tool de
 
 ## Features
 
-    **Semantic Search**: Finds papers based on meaning and intent, not just exact keywords.
+   **Semantic Search**: Finds papers based on meaning and intent, not just exact keywords.
 
-    **Live ArXiv Fetch**: Don't have the data? Fetch the latest research directly from ArXiv and index it instantly.
+   **Live ArXiv Fetch**: Don't have the data? Fetch the latest research directly from ArXiv and index it instantly.
 
-    **Local & Private**: Runs entirely on your machine using Ollama—no data ever leaves your computer.
+   **Local & Private**: Runs entirely on your machine using Ollama—no data ever leaves your computer.
 
-    **Metadata Filtering**: Narrow down searches by specific conference years.
+   **Metadata Filtering**: Narrow down searches by specific conference years.
 
-    **Grounded AI**: Prevents "hallucinations" by forcing the AI to only answer based on provided paper abstracts.
+   **Grounded AI**: Prevents "hallucinations" by forcing the AI to only answer based on provided paper abstracts.
 
 ## System Structure
 The system follows a standard RAG (Retrieval-Augmented Generation) pipeline:
 
-    **Ingestion**: JSON data or ArXiv results are processed.
+   **Ingestion**: JSON data or ArXiv results are processed.
 
-    **Vectorization**: Abstracts are converted into mathematical vectors via ChromaDB.
+   **Vectorization**: Abstracts are converted into mathematical vectors via ChromaDB.
 
-    **Retrieval**: User queries are matched against the most relevant abstracts.
+   **Retrieval**: User queries are matched against the most relevant abstracts.
 
-    **Augmentation & Generation**: The best matches are sent to Ollama (Phi-3/Mistral) to generate a final summary.
+   **Augmentation & Generation**: The best matches are sent to Ollama (Phi-3/Mistral) to generate a final summary.
 
 ## Install Prerequisites
 #### Make sure that you have Python, Git, and Ollama installed on the machine your running the program.
