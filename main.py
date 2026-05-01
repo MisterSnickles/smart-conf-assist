@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+import arxiv
 import os
 import chromadb
 import asyncio
@@ -82,6 +83,62 @@ async def load_sample_data():
                 print(f"Loaded {valid_records} records from sample.json into ChromaDB")
         except Exception as e:
             print(f"Error loading sample.json: {e}")
+
+class ArxivFetchQuery(BaseModel):
+    topic: str
+    max_results: int = 5
+
+@app.post("/api/fetch-arxiv")
+async def fetch_and_ingest_arxiv(fetch_query: ArxivFetchQuery):
+    """Fetch papers directly from ArXiv and load them into ChromaDB."""
+    try:
+        # We run the network request in a background thread so it doesn't freeze the API
+        def get_arxiv_data():
+            client = arxiv.Client()
+            search = arxiv.Search(
+                query=fetch_query.topic,
+                max_results=fetch_query.max_results,
+                sort_by=arxiv.SortCriterion.SubmittedDate
+            )
+            return list(client.results(search))
+
+        results = await asyncio.to_thread(get_arxiv_data)
+        
+        valid_records = 0
+        for result in results:
+            # Create a unique ID using ArXiv's built-in ID system
+            doc_id = f"arxiv_{result.get_short_id()}"
+            
+            # Check if this paper is already in our database to avoid duplicates
+            existing = collection.get(ids=[doc_id])
+            if existing and existing['ids']:
+                continue 
+                
+            clean_abstract = result.summary.replace('\n', ' ')
+            authors_str = ", ".join([author.name for author in result.authors])
+            
+            # Inject directly into ChromaDB!
+            collection.add(
+                documents=[clean_abstract],
+                metadatas=[{
+                    "title": result.title,
+                    "authors": authors_str,
+                    "conference": f"ArXiv Pre-print {result.published.year}",
+                    "track": "Live Web Fetch"
+                }],
+                ids=[doc_id]
+            )
+            valid_records += 1
+            
+        return {
+            "message": "Fetch complete", 
+            "total_found": len(results), 
+            "new_papers_added": valid_records
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/api/ingest")
 async def ingest_abstracts(file: UploadFile = File(...)):
