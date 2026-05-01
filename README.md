@@ -39,8 +39,9 @@ The system follows a standard RAG (Retrieval-Augmented Generation) pipeline:
 `winget install Python.Python.3.12`
 
 
-###Linux
+### Linux
 `sudo apt update`
+
 `sudo apt install python3 python3-venv`
 
 
