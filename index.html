@@ -16,6 +16,20 @@
     </div>
 
     <div class="card">
+        <h2>Live Fetch from ArXiv API</h2>
+        <div class="search-row">
+            <input type="text" id="arxivTopic" placeholder="E.g., quantum computing, large language models...">
+            <select id="arxivCount">
+                <option value="5">Fetch 5</option>
+                <option value="10">Fetch 10</option>
+                <option value="20">Fetch 20</option>
+            </select>
+            <button id="fetchButton" onclick="performArxivFetch()">Fetch & Learn</button>
+        </div>
+        <div id="fetchStatus" style="margin-top: 10px; font-size: 0.9em; color: #555;"></div>
+    </div>
+
+    <div class="card">
         <h2>Search Papers</h2>
 
         <div class="search-row">
@@ -122,6 +136,44 @@ async function performSearch() {
 
     searchButton.disabled = false;
     searchButton.textContent = "Search";
+}
+
+async function performArxivFetch() {
+    const topicInput = document.getElementById('arxivTopic').value.trim();
+    const countInput = document.getElementById('arxivCount').value;
+    const fetchButton = document.getElementById('fetchButton');
+    const fetchStatus = document.getElementById('fetchStatus');
+
+    if (!topicInput) {
+        fetchStatus.innerHTML = '<span class="error">Please enter a topic to fetch.</span>';
+        return;
+    }
+
+    fetchButton.disabled = true;
+    fetchButton.textContent = "Fetching...";
+    fetchStatus.innerHTML = `<div class="spinner" style="display:inline-block; width:15px; height:15px; border-width:2px; margin-right:5px;"></div> Pulling from ArXiv...`;
+
+    try {
+        const response = await fetch('/api/fetch-arxiv', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ topic: topicInput, max_results: parseInt(countInput) })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            fetchStatus.innerHTML = `<span style="color: green;">Added ${result.new_papers_added} new research papers.</span>`;
+            document.getElementById('arxivTopic').value = ''; // Clear the input
+        } else {
+            fetchStatus.innerHTML = `<span class="error">Error: ${result.detail}</span>`;
+        }
+    } catch (error) {
+        fetchStatus.innerHTML = '<span class="error">Connection error.</span>';
+    }
+
+    fetchButton.disabled = false;
+    fetchButton.textContent = "Fetch & Learn";
 }
 </script>
 

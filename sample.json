@@ -43,5 +43,185 @@
     "conference_name": "ICLR",
     "conference_year": 2025,
     "track": "Main Conference"
+  },
+  {
+    "paper_id": "cvpr-2020-015",
+    "title": "Momentum Contrast for Unsupervised Visual Representation Learning",
+    "authors": ["Kaiming He", "Haoqi Fan", "Yuxin Wu", "Saining Xie", "Ross Girshick"],
+    "abstract": "We present Momentum Contrast (MoCo) for unsupervised visual representation learning. From a perspective on contrastive learning as dictionary look-up, we build a dynamic dictionary with a queue and a moving-averaged encoder. This enables building a large and consistent dictionary on-the-fly that facilitates contrastive unsupervised learning.",
+    "conference_name": "CVPR",
+    "conference_year": 2020,
+    "track": "Main Conference"
+  },
+  {
+    "paper_id": "facct-2021-092",
+    "title": "On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?",
+    "authors": ["Emily M. Bender", "Timnit Gebru", "Angelina McMillan-Major", "Shmargaret Shmitchell"],
+    "abstract": "We explore the risks of large language models, including environmental costs, financial costs, and the dangers of relying on static, massive datasets that encode biases. We argue for more careful consideration of the training data and the potential for these models to function as 'stochastic parrots'.",
+    "conference_name": "FAccT",
+    "conference_year": 2021,
+    "track": "Main Conference"
+  },
+  {
+    "paper_id": "iccv-2021-204",
+    "title": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
+    "authors": ["Ze Liu", "Yutong Lin", "Yue Cao", "Han Hu", "Yixuan Wei", "Zheng Zhang", "Stephen Lin", "Baining Guo"],
+    "abstract": "This paper presents a new vision Transformer, called Swin Transformer, that capably serves as a general-purpose backbone for computer vision. Challenges in adapting Transformer from language to vision arise from differences between the two domains, which we address with a hierarchical architecture whose representation is computed with Shifted windows.",
+    "conference_name": "ICCV",
+    "conference_year": 2021,
+    "track": "Main Conference"
+  },
+  {
+    "paper_id": "kdd-2020-038",
+    "title": "Connecting the Dots: Multivariate Time Series Forecasting with Graph Neural Networks",
+    "authors": ["Zonghan Wu", "Shirui Pan", "Guodong Long", "Jing Jiang", "Xiaojun Chang", "Chengqi Zhang"],
+    "abstract": "Multivariate time series forecasting is critical in many domains. We propose a general graph neural network framework designed to uncover spatial-temporal relationships among multiple variables automatically without predefined graphs.",
+    "conference_name": "KDD",
+    "conference_year": 2020,
+    "track": "Research Track"
+  },
+  {
+    "paper_id": "cvpr-2022-111",
+    "title": "Masked Autoencoders Are Scalable Vision Learners",
+    "authors": ["Kaiming He", "Xinlei Chen", "Saining Xie", "Yanghao Li", "Piotr Dollár", "Ross Girshick"],
+    "abstract": "This paper shows that masked autoencoders (MAE) are scalable vision learners. Our asymmetric encoder-decoder architecture allows us to mask a high proportion of the input image, yielding a nontrivial and meaningful self-supervisory task.",
+    "conference_name": "CVPR",
+    "conference_year": 2022,
+    "track": "Main Conference"
+  },
+  {
+    "paper_id": "chi-2023-018",
+    "title": "Co-Writing with Opinionated Language Models Affects Users' Views",
+    "authors": ["Maurice Jakesch", "Advait Bhat", "Daniel Buschek", "Lior Zalmanson", "Mor Naaman"],
+    "abstract": "We investigate how writing with an opinionated language model affects users' own views. Through a controlled experiment, we found that participants shifted their written and underlying opinions to align with the language model's embedded biases.",
+    "conference_name": "CHI",
+    "conference_year": 2023,
+    "track": "Main Track"
+  },
+  {
+    "paper_id": "cvpr-2023-402",
+    "title": "Adding Conditional Control to Text-to-Image Diffusion Models",
+    "authors": ["Lvmin Zhang", "Anyi Rao", "Maneesh Agrawala"],
+    "abstract": "We present ControlNet, a neural network architecture to add spatial conditioning controls to large, pretrained text-to-image diffusion models. ControlNet locks the production-ready large diffusion models, and reuses their deep encoding layers pretrained with billions of images as a strong backbone.",
+    "conference_name": "CVPR",
+    "conference_year": 2023,
+    "track": "Main Conference"
+  },
+  {
+    "paper_id": "mm-2022-074",
+    "title": "Multi-grained Vision Language Pre-training: Aligning Texts with Visual Concepts",
+    "authors": ["Zhiyuan Fang", "Jianfeng Wang", "Xiaowei Hu", "Lin Liang", "Zhe Gan", "Lijuan Wang", "Yezhou Yang", "Zicheng Liu"],
+    "abstract": "We propose a multi-grained vision language pre-training framework. Instead of simply relying on object detectors or global image-text alignment, our approach introduces fine-grained semantic alignment between text descriptions and localized visual concepts.",
+    "conference_name": "ACM Multimedia",
+    "conference_year": 2022,
+    "track": "Main Track"
+  },
+  {
+    "paper_id": "icra-2023-155",
+    "title": "RT-1: Robotics Transformer for Real-World Control at Scale",
+    "authors": ["Anthony Brohan", "Noah Brown", "Justice Carbajal", "Yevgen Chebotar", "Joseph Dabis", "Chelsea Finn"],
+    "abstract": "We present RT-1, a robotics transformer model that takes images and natural language instructions and outputs tokenized camera and arm actions. It exhibits significant generalization across tasks, environments, and objects after being trained on a large-scale real-world robotics dataset.",
+    "conference_name": "ICRA",
+    "conference_year": 2023,
+    "track": "Main Conference"
+  },
+  {
+    "paper_id": "uist-2021-022",
+    "title": "Designing Interactive Systems for Prompt Engineering",
+    "authors": ["Chenglong Wang", "Rui Dong", "Deyi Xiong", "Hao Dong"],
+    "abstract": "As large language models become more capable, prompt engineering emerges as a critical user task. We present a novel interactive system that assists users in iteratively refining, managing, and evaluating prompts for complex generative tasks.",
+    "conference_name": "UIST",
+    "conference_year": 2021,
+    "track": "Main Track"
+  },
+  {
+    "paper_id": "tpami-2022-088",
+    "title": "A Survey on Vision Transformer",
+    "authors": ["Kai Han", "Yunhe Wang", "Hanting Chen", "Xinghao Chen", "Jianyuan Guo", "Zhenhua Liu", "Yehui Tang", "An Xiao", "Chunjing Xu", "Yixing Xu", "Zhaohui Yang", "Yiping Meng", "Dacheng Tao"],
+    "abstract": "Transformers have achieved great success in natural language processing. Recently, they have shown promising performance in computer vision. This paper comprehensively reviews the application of Transformers in computer vision tasks, detailing architectural variants and performance benchmarks.",
+    "conference_name": "T-PAMI",
+    "conference_year": 2022,
+    "track": "Journal Article"
+  },
+  {
+    "paper_id": "sigir-2023-112",
+    "title": "Dense Text Retrieval based on Pre-trained Language Models",
+    "authors": ["Yinqiong Cai", "Yixing Fan", "Jiafeng Guo", "Ruqing Zhang", "Yanyan Lan", "Xueqi Cheng"],
+    "abstract": "Dense retrieval based on pre-trained language models has become a new paradigm for text retrieval. We propose a novel training methodology that significantly improves the effectiveness of dense retrievers by mining hard negatives dynamically without increasing inference latency.",
+    "conference_name": "SIGIR",
+    "conference_year": 2023,
+    "track": "Full Papers"
+  },
+  {
+    "paper_id": "sp-2024-004",
+    "title": "Poisoning Web-Scale Training Datasets is Practical",
+    "authors": ["Nicholas Carlini", "Matthew Jagielski", "Christopher A. Choquette-Choo", "Florian Tramer"],
+    "abstract": "We demonstrate that poisoning large, web-scale training datasets is both practical and highly effective. We introduce a new class of poisoning attacks that can manipulate model outputs for specific triggers without degrading overall performance, bypassing standard anomaly detection.",
+    "conference_name": "IEEE S&P",
+    "conference_year": 2024,
+    "track": "Main Conference"
+  },
+  {
+    "paper_id": "chi-2024-219",
+    "title": "LLMs as Research Tools: Applications and Evaluations in HCI Data Work",
+    "authors": ["Margarita Aubin Le Quéré", "Hanna Schroeder", "Chiara Randazzo"],
+    "abstract": "We evaluate how LLMs are being adopted to perform actual HCI research tasks like data collection, thematic analysis, and qualitative coding. The authors critically evaluate the methodological and ethical appropriateness of using LLMs in these research pipelines.",
+    "conference_name": "CHI",
+    "conference_year": 2024,
+    "track": "Papers"
+  },
+  {
+    "paper_id": "icassp-2022-099",
+    "title": "WavLM: Large-Scale Self-Supervised Pre-Training for Full Stack Speech Processing",
+    "authors": ["Sanyuan Chen", "Chengyi Wang", "Zhengyang Chen", "Yu Wu", "Shujie Liu", "Zhuo Chen", "Jinyu Li"],
+    "abstract": "We introduce WavLM, a large-scale self-supervised pre-training framework for speech processing. By jointly learning masked speech prediction and denoising, WavLM achieves state-of-the-art performance on a wide range of speech tasks including recognition, speaker verification, and separation.",
+    "conference_name": "ICASSP",
+    "conference_year": 2022,
+    "track": "Speech Recognition"
+  },
+  {
+    "paper_id": "kdd-2024-118",
+    "title": "Grounding and Evaluation for Large Language Models: Practical Challenges and Lessons Learned",
+    "authors": ["Krishnaram Kenthapadi", "Mehrnoosh Sameki", "Ankur Taly"],
+    "abstract": "This survey evaluates the practical challenges of LLMs, such as hallucination, ethical grounding, and evaluation constraints. We provide a comprehensive overview of techniques for grounding LLMs in verifiable external knowledge sources for enterprise AI systems.",
+    "conference_name": "KDD",
+    "conference_year": 2024,
+    "track": "Applied Data Science"
+  },
+  {
+    "paper_id": "wacv-2025-045",
+    "title": "Adaptive Multi-Modal Fusion for Robust Zero-Shot Learning",
+    "authors": ["Xin Wang", "Le Song", "Jiebo Luo"],
+    "abstract": "Zero-shot learning relies heavily on aligning visual and semantic spaces. We propose an adaptive multi-modal fusion network that dynamically weights textual, visual, and depth features to improve robustness against missing or noisy modalities in real-world deployments.",
+    "conference_name": "WACV",
+    "conference_year": 2025,
+    "track": "Main Conference"
+  },
+  {
+    "paper_id": "facct-2022-031",
+    "title": "Towards Intersectional Fairness in AI",
+    "authors": ["Aylin Caliskan", "Joanna J. Bryson", "Arvind Narayanan"],
+    "abstract": "Current fairness metrics often fail to capture intersectional biases. We introduce a new framework for evaluating and mitigating bias across intersecting identity groups, demonstrating its effectiveness on several widely used benchmark datasets.",
+    "conference_name": "FAccT",
+    "conference_year": 2022,
+    "track": "Main Conference"
+  },
+  {
+    "paper_id": "vis-2023-088",
+    "title": "Visualizing the Inner Workings of Large Language Models",
+    "authors": ["Hendrik Strobelt", "Sebastian Gehrmann", "Michael Behrisch", "Adam Perer", "Hanspeter Pfister", "Alexander Rush"],
+    "abstract": "Understanding the decision-making process of large language models is challenging. We introduce an interactive visual analytics tool that allows researchers to explore attention heads, sequence mappings, and neuron activations across different transformer layers dynamically.",
+    "conference_name": "VIS",
+    "conference_year": 2023,
+    "track": "Visual Analytics"
+  },
+  {
+    "paper_id": "chi-2025-012",
+    "title": "Evaluating the Cognitive Load of Real-Time AI Translation Tools",
+    "authors": ["Sarah J. Newman", "Hiroshi Ishii", "Elizabeth Churchill"],
+    "abstract": "Real-time AI translation tools are becoming ubiquitous, yet their impact on user cognitive load during active conversation remains under-explored. We present a mixed-methods study evaluating mental demand when using concurrent AI translation interfaces.",
+    "conference_name": "CHI",
+    "conference_year": 2025,
+    "track": "Papers"
   }
 ]
