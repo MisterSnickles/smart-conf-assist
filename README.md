@@ -3,6 +3,10 @@ Smart Conference Assistant - Peer Review Article AI Search
 
 The Smart Conference Assistant is a Retrieval-Augmented Generation (RAG) tool designed to help researchers find relevant peer-reviewed articles. Unlike keyword search, this uses vector embeddings to understand the context of your query and generates grounded answers using a local LLM.
 
+
+<img width="600" height="575" alt="image" src="https://github.com/user-attachments/assets/102b1877-ad73-4da7-a61c-41803a10531d" />
+
+
 ## Features
 
    **Semantic Search**: Finds papers based on meaning and intent, not just exact keywords.
