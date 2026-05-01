@@ -14,6 +14,9 @@ from io import BytesIO
 
 app = FastAPI(title="Smart Conference Assistant API")
 
+# Serve static files (like index.html) from the current directory
+app.mount("/static", StaticFiles(directory="."), name="static")
+
 # Allow the local HTML file to talk to this local server
 app.add_middleware(
     CORSMiddleware,
