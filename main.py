@@ -1,5 +1,8 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+import os
 import chromadb
 import asyncio
 import json
@@ -19,6 +22,11 @@ app.add_middleware(
     allow_methods=["*"],  
     allow_headers=["*"],
 )
+
+# Serve the frontend HTML file
+@app.get("/")
+async def serve_frontend():
+    return FileResponse("index.html")
 
 # Initialize ChromaDB locally
 chroma_client = chromadb.PersistentClient(path="./chroma_data")
@@ -188,9 +196,10 @@ async def search_and_respond(search_query: SearchQuery):
             5. Use only the provided text. Do not invent details or use outside knowledge.
             """
         
+        # Generate response
         response = await asyncio.to_thread(
             lambda: ollama.generate(
-                model="mistral",  # Change to "llama2" if you pulled that instead
+                model="mistral", 
                 prompt=prompt,
                 stream=False
             )
